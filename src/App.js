@@ -1,10 +1,8 @@
-import Video from './components/Video.js'
 import "./App.css"
 import videoDB from './data/data'
-import PlayButton from './components/playbutton'
-import Counter from './components/counter.js'
 import { useState } from 'react'
-
+import AddVideo from './components/AddVideos.js'
+import VideoList from './components/VideoList.js'
 
 function App() {
 
@@ -12,48 +10,23 @@ function App() {
 
 const [videos,setVideos] = useState(videoDB)
 
+function addVideos(video){
+  setVideos([...videos,
+    {...video, id : video.length+1}
+   
+  ])
+}
+
 
   return (
-    <div className='App' onClick={() => console.log("App")}><div>
-      <button onClick = {()=>{
-      
-        setVideos(  [...videos,{ id:videos.length+1,
-          title: 'Demo JS tutorial',
-          views: '360M',
-          time: '10 month ago',
-          channel: 'Coder Dost',
-          verified: true}])
-      }}>Add Videos</button>
-    </div>
-      {
-        videos.map(video => <Video
-          key={video.id}
-          title={video.title}
-          views={video.views}
-          time={video.time}
-          channel={video.channel}
-          verified={video.verified}
-          id={video.id} >
+    <div className='App' onClick={() => console.log("App")}>
+      <AddVideo addVideos={addVideos}></AddVideo>
+    <VideoList videos = {videos}></VideoList>
+    
+    
 
+    
 
-          <PlayButton
-            onPlay={() => console.log('playing..', video.title)}
-            onPause={() => console.log('paused..', video.title)}>{video.title}
-          </PlayButton>
-
-
-        </Video>)
-      }
-
-      <div style={{ clear: 'both' }}>
-        {/* <PlayButton message='play-msg' onPlay = {()=>console.log('play')}  onPause = {()=>console.log('pause')}>play</PlayButton> */}
-
-
-        {/* <PlayButton message='pause-msg' onClick= {()=>alert('pause')}>pause</PlayButton> */}
-
-      </div>
-
-<Counter></Counter>
 
     </div>
 
